@@ -92,9 +92,7 @@ function processLastItem(stringList, callback){
  * should return 1000.
 */
 function processSum(numberList, callback) {
-  const sum = callback(numberList.reduce(function (accumulator, currentValue){
-    return accumulator + currentValue;
-  }, 0))
+  return callback(numberList.reduce((accumulate,currentValue) => accumulate + currentValue, 0))
 }
 /**
  * ### Challenge `processProduct`
@@ -166,7 +164,9 @@ function processContains(item, list, callback) {
  * should return 3.
 */
 function processDuplicateFree(list, callback) {
-  
+  return callback(list.filter((item, index) => {
+    return list.indexOf(item) === index;
+  }))
 }
 
 /////////////// HIGHER-ORDER ARRAY METHODS ///////////////
@@ -296,14 +296,15 @@ function counterMaker() {
  * counter() // should return 0
  * etc
 */
-function counterMakerWithLimit(limit) {
+function counterMakerWithLimit(maxValue) {
   let count = 0;
-  for (i=0; i<limit; i++){
-    function counter(){
-      return count++
+  function counter(){
+    if(count <= maxValue){
+      return count ++;
+    }else{
+      count = 0;
+      return count++;
     }
-  
-    
   }
   return counter;
 }
